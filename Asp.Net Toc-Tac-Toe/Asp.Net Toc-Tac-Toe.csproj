@@ -71,8 +71,8 @@
   <ItemGroup>
     <Content Include="gulpfile.js" />
     <Content Include="index.html" />
-    <Content Include="src\index.css" />
-    <TypeScriptCompile Include="src\index.tsx" />
+    <Content Include="postcss.config.js" />
+    <None Include="src\index.scss" />
     <Content Include="Web.config" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
@@ -94,6 +94,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\generic-css-modules.d.ts" />
+    <TypeScriptCompile Include="src\index.tsx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ReactDOM = require("react-dom");
+const css = require("./index.scss");
 class Square extends React.Component {
     constructor(props) {
         super(props);
@@ -10,7 +11,7 @@ class Square extends React.Component {
         };
     }
     render() {
-        return (<button className="square" onClick={() => this.setState({ value: this.state.value === "X" ? "O" : "X" })}>
+        return (<button className={css.square} onClick={() => this.setState({ value: this.state.value === "X" ? "O" : "X" })}>
         {this.state.value}
       </button>);
     }
@@ -22,8 +23,8 @@ class Board extends React.Component {
     render() {
         const status = 'Next player: X';
         return (<div>
-        <div className="status">{status}</div>
-        <div className="board-row">
+        <div className={css.status}>{status}</div>
+        <div className={css.boardRow}>
           <Square value={0}/>
           {this.renderSquare(1)}
           {this.renderSquare(2)}
@@ -43,11 +44,11 @@ class Board extends React.Component {
 }
 class Game extends React.Component {
     render() {
-        return (<div className="game">
-        <div className="game-board">
+        return (<div className={css.game}>
+        <div className={css.gameBoard}>
           <Board />
         </div>
-        <div className="game-info">
+        <div className={css.gameInfo}>
           <div></div>
           <ol></ol>
         </div>

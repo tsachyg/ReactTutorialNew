@@ -1,8 +1,9 @@
 ﻿const path = require('path');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
+
+const context = path.resolve(__dirname, 'src');
 
 module.exports = {
   mode: 'development',
@@ -13,32 +14,64 @@ module.exports = {
     publicPath: 'dist/'
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // all options are optional
-      filename: 'allStyles.css',
-      //chunkFilename: 'chunck.css',
-      ignoreOrder: false, // Enable to remove warnings about conflicting order
-    }),
     new webpack.ProvidePlugin({
       _: "lodash"
     })
   ],
   module: {
     rules: [
-      { test: /\.css$/, use: [
+      {
+        test: /\.s?css$/,
+        use: [
+          // style-loader
+          { loader: 'style-loader' },
+          // css-loader
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: 'css-loader',
             options: {
-              // you can specify a publicPath here
-              // by default it uses publicPath in webpackOptions.output
-              publicPath: '../',
-              hmr: process.env.NODE_ENV === 'development',
-            },
+              importLoaders: 2,
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            }
           },
-          'css-loader',
-        ], },
-      { test: /\.js?x?$/, use: { loader: 'babel-loader', options: { presets: ['@babel/preset-react', '@babel/preset-env'] } } },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: loader => [
+                require('postcss-import')({ root: loader.resourcePath }),
+                require('cssnano')(),
+                require('postcss-cssnext')(),
+              ]
+            }
+          }
+        ]
+      },
+      {
+        test: /\.js?x?$/,
+        use: {
+          loader: 'babel-loader',
+          //options: {
+          //  presets: ['@babel/preset-react', '@babel/preset-env']
+          //},
+          query: {
+            plugins: [
+              '@babel/transform-react-jsx',
+              [
+                'react-css-modules', {
+                  "generateScopedName": "[name]__[local]___[hash:base64:5]",
+                  "handleMissingStyleName": "warn",
+                  "filetypes": {
+                    ".scss": {
+                      "syntax": "postcss-scss"
+                    }
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      },
     ]
   },
   optimization: {
