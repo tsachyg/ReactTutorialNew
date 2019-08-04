@@ -8,7 +8,17 @@
     "sourceMap": true,
     "target": "es2018",
     "module": "none",
-    "jsx": "preserve"
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "customMatcher": "\\s?css$",
+          "camelCase": "dashes"
+        }
+      }
+    ]
   },
   "exclude": [
     "node_modules"
