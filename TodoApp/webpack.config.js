@@ -6,9 +6,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const context = path.resolve(__dirname, 'src');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: { 'main': './src/index.jsx' },
-  watch: false,
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js',
@@ -20,11 +19,7 @@ module.exports = {
     })
   ],
   resolve: {
-    modules: [
-      path.resolve('./src'),
-      path.resolve('./node_modules')
-    ],
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.scss']
   },
   module: {
     rules: [
@@ -89,7 +84,7 @@ module.exports = {
         cache: true,
         parallel: true,
         uglifyOptions: {
-          compress: true,
+          compress: false,
           ecma: 6,
           mangle: true
         },

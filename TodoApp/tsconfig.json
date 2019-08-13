@@ -10,7 +10,6 @@
     "module": "none",
     "moduleResolution": "node",
     "jsx": "preserve",
-    "baseUrl": "./src/",
     "plugins": [
       {
         "name": "typescript-plugin-css-modules",
